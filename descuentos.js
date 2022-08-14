@@ -1,56 +1,92 @@
-const inputPrice = document.querySelector("#price");
-const inputDiscount = document.querySelector("#discount");
-const btn = document.querySelector("#calcular");
-const pResult = document.querySelector("#result");
-const coupon = document.querySelector("#coupon");
-const couponBtn = document.querySelector("#couponBtn");
+const inputPrice = document.querySelector('#price');
+const inputCoupon = document.querySelector('#coupon');
+const btn = document.querySelector('#calcular');
+const pResult = document.querySelector('#result');
 
-btn.addEventListener("click", calcularPrecioConDescuento);
-couponBtn.addEventListener("click", cuponDescuento);
+btn.addEventListener('click', calcularPrecioConDescuento);
 
-function calcularPrecioConDescuento(price, discount) {
-//   const price = Number(inputPrice.value);
-//   const discount = Number(inputDiscount.value);
+// const arrayUObjecto = undefined; // ['cupones': descuento] {}?
 
-  if (!price || !discount) {
-    console.log(price, discount);
-    pResult.innerText = "Por favor llena el formulario";
+// const couponsObj = {
+//   'JuanDC_es_Batman': 30,
+//   '3456789': 25,
+//   '123': 15,
+// };
+
+const couponsList = [];
+couponsList.push({
+  name: 'David',
+  discount: 30,
+});
+couponsList.push({
+  name: 'Mercado',
+  discount: 25,
+});
+couponsList.push({
+  name: 'Juanes',
+  discount: 15,
+});
+
+function calcularPrecioConDescuento() {
+  const price = Number(inputPrice.value);
+  const coupon = inputCoupon.value;
+
+  if (!price || !coupon) {
+    pResult.innerText = 'CHANCLA por favor llena el formulario';
     return;
   }
 
-  if (discount > 100) {
-    pResult.innerText = "No puede ser mayor a 100%";
+  let discount;
+
+  function isCouponInArray(couponElement) {// {name, discount}
+    return couponElement.name == coupon;
+  }
+
+  const couponInArray = couponsList.find(isCouponInArray); // {}
+
+  if (couponInArray) {
+    discount = couponInArray.discount;
+  } else {
+    pResult.innerText = 'El cupón no es válido';
     return;
   }
+
+  console.log({
+    coupon,
+    discount,
+    couponInArray,
+    couponsList,
+  });
+
+  // if (couponsObj[coupon]) {
+  //   discount = couponsObj[coupon];
+  // } else {
+  // pResult.innerText = 'El cupón no es válido';
+  // return;
+  // }
+
+  // switch (coupon) {
+  //   case 'JuanDC_es_Batman':
+  //     discount = 30;
+  //     break;
+  //   case 'no_le_digas_a_nadie':
+  //     discount = 25;
+  //     break;
+  //   default:
+  // pResult.innerText = 'El cupón no es válido';
+  // return;
+  // }
+
+  // if (coupon == 'JuanDC_es_Batman') {
+  //   discount = 30;
+  // } else if (coupon == 'no_le_digas_a_nadie') {
+  //   discount = 25;
+  // } else {
+  // pResult.innerText = 'El cupón no es válido';
+  // return;
+  // }
+
   const newPrice = (price * (100 - discount)) / 100;
 
-  pResult.innerText = "El nuevo precio con descuento es $" + newPrice;
-}
-
-const cupones = [
-  { clave: "BASICO", valor: 15 },
-  { clave: "MEDIO", valor: 30 },
-  { clave: "SUPER", valor: 50 },
-];
-
-function cuponDescuento() {
-  const inputCoupon = coupon.value;
-  const price = Number(inputPrice.value);
-
-  const validation = cupones.map(function (cupones) {
-    switch (inputCoupon) {
-      case "BASICO":
-        calcularPrecioConDescuento(price, 15)
-        break;
-      case "MEDIO":
-        calcularPrecioConDescuento(price, 30)
-        break;
-      case "SUPER":
-        calcularPrecioConDescuento(price, 50)
-        break;
-      default:
-        console.log("NO EXISTE EL CUPON");
-        break;
-    }
-  });
+  pResult.innerText = 'El nuevo precio con descuento es $' + newPrice;
 }
