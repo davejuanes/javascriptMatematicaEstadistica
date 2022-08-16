@@ -101,7 +101,7 @@ function ordernarLista(listaDesordenada) {
 // [ [], [], [], []]
 function ordernarListaBidimensional(listaDesordenada, i) {
     function ordenarListaSort(valorAcumulado, nuevoValor) {
-        return valorAcumulado[1] - nuevoValor[1]
+        return valorAcumulado[i] - nuevoValor[i]
     }
 
     const lista = listaDesordenada.sort(ordenarListaSort)
