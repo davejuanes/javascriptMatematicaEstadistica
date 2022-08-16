@@ -45,3 +45,15 @@ function proyeccionPorPersona(nombrePersona) {
 
     return nuevoSalario
 }
+
+// Análisis empresarial
+/*
+    Industrias Mokepon: {
+        2018: [salario, salario]
+        2019:
+        2025:
+    }
+*/
+
+const empresa = {};
+salarios.forEach
